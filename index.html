@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Password Display</title>
+  <title>PornHubsKeySystem</title>
 </head>
 <body>
-  <button id="showPassword">Show Password</button>
+  <button id="showPassword">Get Key 1 Every 2 Hours</button>
   <div id="password"></div>
 
   <script>
@@ -45,7 +45,7 @@
         const password = jsonData["password" + randomNumber];
 
         // Display the password on the webpage
-        passwordDiv.innerHTML = password;
+        passwordDiv.innerHTML = "Key:"password;
 
         // Update the last click timestamp in localStorage
         localStorage.setItem("lastClick", Date.now());
