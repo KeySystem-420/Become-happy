@@ -9,50 +9,48 @@
   <button id="showPassword">Get Key 1 Every 2 Hours</button>
   <div id="password"></div>
 
-  <script>
+ <script>
     // Get the button and password div elements
     const button = document.getElementById("showPassword");
     const passwordDiv = document.getElementById("password");
 
     // Set the minimum cooldown time in minutes
-    const cooldownMinutes = 0;
+    const cooldownMinutes = 120;
+
+    // Fetch the JSON data from the provided URL
+    async function fetchJsonData() {
+      const response = await fetch("https://raw.githubusercontent.com/Solara-Dev-Team/FGYLPKYJJLKGHL-J-KMLVPJIOKXDHJSFGJK/main/diojfjkojjfeiowwjfiojuesioujfiodsujiofguisdugiusdiguiouioewusugiofui.json");
+      const jsonData = await response.json();
+      const data = JSON.stringify(jsonData);
+      localStorage.setItem("jsonData", data);
+      return data;
+    }
+
+    // Initialize the JSON data
+    let jsonData = localStorage.getItem("jsonData");
+    if (!jsonData) {
+      jsonData = await fetchJsonData();
+    }
+
+    // Remove the URL from the JSON data
+    jsonData = jsonData.replace(/https:\/\/raw\.githubusercontent\.com\/Solara-Dev-Team\/FGYLPKYJJLKGHL-J-KMLVPJIOKXDHJSFGJK\/main\/diojfjkojjfeiowwjfiojuesioujfiodsujiofguisdugiusdiguiouioewusugiofui\.json/, "");
 
     // Add an event listener to the button
     button.addEventListener("click", async () => {
-      // Get the last click timestamp from localStorage or set it to 0 if not found
-      const lastClickTimestamp = localStorage.getItem("lastClick");
-      let clickTimestamp = 0;
+      // Generate a random number between 1 and 51 (inclusive)
+      const randomNumber = Math.floor(Math.random() * 51) + 1;
 
-      if (lastClickTimestamp) {
-        clickTimestamp = parseInt(lastClickTimestamp, 10);
-      }
+      // Extract the JSON data from the variable
+      const newJsonData = JSON.parse(jsonData);
 
-      // Calculate the elapsed time since the last click in minutes
-      const elapsedMinutes = Math.floor((Date.now() - clickTimestamp) / (1000 * 60));
+      // Store the selected password in a variable
+      const password = newJsonData["password" + randomNumber];
 
-      // If the minimum cooldown time has passed, fetch a new password and update the timestamp
-      if (elapsedMinutes >= cooldownMinutes) {
-        // Fetch the JSON file from the provided URL
-        const response = await fetch("https://raw.githubusercontent.com/Solara-Dev-Team/FGYLPKYJJLKGHL-J-KMLVPJIOKXDHJSFGJK/main/diojfjkojjfeiowwjfiojuesioujfiodsujiofguisdugiusdiguiouioewusugiofui.json");
+      // Display the password on the webpage
+      passwordDiv.innerHTML = "Key: <strong>" + password + "</strong>";
 
-        // Parse the JSON data
-        const jsonData = await response.json();
-
-        // Generate a random number between 1 and 51 (inclusive)
-        const randomNumber = Math.floor(Math.random() * 51) + 1;
-
-        // Store the selected password in a variable
-        const password = jsonData["password" + randomNumber];
-
-        // Display the password on the webpage
-        passwordDiv.innerHTML = "Key:" + password;
-
-        // Update the last click timestamp in localStorage
-        localStorage.setItem("lastClick", Date.now());
-      } else {
-        // The user has clicked the button too recently, display a message
-        passwordDiv.innerHTML = `Please wait ${cooldownMinutes - elapsedMinutes} minutes before clicking again.`;
-      }
+      // Update the last click timestamp in localStorage
+      localStorage.setItem("lastClick", Date.now());
     });
 
     // On page load, check if there's a stored timestamp to prevent button clicks
