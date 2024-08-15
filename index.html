@@ -15,7 +15,7 @@
     const passwordDiv = document.getElementById("password");
 
     // Set the minimum cooldown time in minutes
-    const cooldownMinutes = 120;
+    const cooldownMinutes = 0;
 
     // Add an event listener to the button
     button.addEventListener("click", async () => {
@@ -45,7 +45,7 @@
         const password = jsonData["password" + randomNumber];
 
         // Display the password on the webpage
-        passwordDiv.innerHTML = "Key: <strong>" + password + "</strong>";
+        passwordDiv.innerHTML = "Key:" + password;
 
         // Update the last click timestamp in localStorage
         localStorage.setItem("lastClick", Date.now());
