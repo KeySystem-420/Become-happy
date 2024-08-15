@@ -45,7 +45,7 @@
         const password = jsonData["password" + randomNumber];
 
         // Display the password on the webpage
-        passwordDiv.innerHTML = "Key:"password;
+        passwordDiv.innerHTML = "Key: <strong>" + password + "</strong>";
 
         // Update the last click timestamp in localStorage
         localStorage.setItem("lastClick", Date.now());
